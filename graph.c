@@ -41,6 +41,8 @@ void del_path(t_room *room, char *neighbour)
         {
             printf("dell -> %s from -> %s\n", (char*)neighbours->content, room->name);
             neighbours->content = "LLLL";
+            if (room->head != 1)
+                room->visited = 1;
             return ;
         }
         neighbours = neighbours->next;

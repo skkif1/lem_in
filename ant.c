@@ -15,6 +15,7 @@
 t_path *new_path(char *str)
 {
     t_path *path;
+    static int name;
     int i;
     int j;
 
@@ -27,9 +28,12 @@ t_path *new_path(char *str)
             j++;
         i++;
     }
+    name++;
     path->ssteps = ft_strsplit(str, '#');
     path->ssteps[j - 1] = NULL;
     path->length = j;
+    path->name = ft_itoa(name);
+    path->parallel_packadge = NULL;
     path->steps = ft_strdup(str);
     return path;
 }

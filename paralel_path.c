@@ -12,6 +12,8 @@
 
 #include "lemin.h"
 
+t_list *g_all_p;
+
 int if_parallel(t_path *path1, t_path *path2)
 {
     int i;
@@ -47,25 +49,51 @@ void sort_path(t_list *list)
             p1 = temp->content;
 
             if (if_parallel(temp->content, to_compare->content))
-                ft_lstadd(&((t_path*)temp->content)->parallel_packadge, ft_lstnew(to_compare->content, sizeof(to_compare->content)));
+                ft_lstadd(&((t_path*)temp->content)->parallel_packadge, ft_lstnew(((t_path*)to_compare->content)->name, sizeof(((t_path*)to_compare->content)->name)));
             to_compare = to_compare->next;
         }
         temp = temp->next;
     }
-
-//    while (((t_path*)list->content)->parallel_packadge)
-//    {
-//        t_path *path;
-//        path = (t_path*)list->content;
 //
-//        printf("%s", ((t_path*)path->parallel_packadge->content)->steps);
-//        ((t_path*)list->content)->parallel_packadge = ((t_path*)list->content)->parallel_packadge->next;
+//    t_path *path = list->content;
+//    t_list *lst = path->parallel_packadge;
+//    t_path *temp1;
+//    while (lst)
+//    {
+//        temp1 = get_path_by_name(list, lst->content);
+//        printf("%s ", temp1->name);
+//        printf("%d\n", temp1->length);
+//        lst = lst->next;
 //    }
+
+}
+static t_list *get_all_len(t_path *path)
+{
+    t_list *res;
+    t_list *parallel_paths;
+    t_path *temp_path;
+    int temp;
+    char *num;
+
+    //printf("%d\n", path->length);
+    res = NULL;
+    if (!path->parallel_packadge)
+        return res;
+    parallel_paths = path->parallel_packadge;
+//    while (parallel_paths)
+//    {
+//        temp_path = get_path_by_name(g_all_p, parallel_paths->content);
+//        printf("%d\n", temp_path->length);
+//        parallel_paths = parallel_paths->next;
+//    }
+    return res;
 }
 
 void count_steps(t_path *path)
 {
-    t_list *parall_path;
+    t_list *parall_len;
 
-    parall_path = ;
+    parall_len = get_all_len(path);
+
+
 }

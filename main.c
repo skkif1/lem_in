@@ -28,13 +28,9 @@ int main(int argc, char **argv)
     room = get_end_start(g_rooms, 2);
     set_weight(room, 100);
 
-    find_all_path(get_end_start(g_rooms, 1));
 
-    sort_path(g_all_p);
 
-    while (g_all_p)
-    {
-        printf("%d", ((t_path *) g_all_p->content)->length);
-        g_all_p = g_all_p->next;
-    }
+ find_all_path(get_end_start(g_rooms, 1), ft_strnew(1));
+
+
 }

@@ -53,6 +53,7 @@ void link_nodes(char *name1, char *name2)
     t_list *node2;
     t_room *room;
     t_room *room2;
+    t_list *neighbours;
 
 
     if ((node = get_node_by_name(name1)) == NULL)
@@ -62,10 +63,31 @@ void link_nodes(char *name1, char *name2)
 
     room = node->content;
     room2 = node2->content;
-
+    neighbours = room->neighbours;
+    while (neighbours)
+    {
+        if (!ft_strcmp(name2, neighbours->content) || !ft_strcmp(name1, neighbours->content))
+            return ;
+        neighbours = neighbours->next;
+    }
     ft_lstadd_end(&room->neighbours, ft_lstnew(name2, sizeof(char) * ft_strlen(name2) + 1));
     ft_lstadd_end(&room2->neighbours, ft_lstnew(name1, sizeof(char) * ft_strlen(name1) + 1));
 
+}
+
+t_path *get_path_by_name(t_list *list, char *name)
+{
+    t_list *temp;
+
+    temp = list;
+
+    while (temp)
+    {
+        if (!ft_strcmp(((t_path*)temp->content)->name, name))
+            return temp->content;
+        temp = temp->next;
+    }
+    return NULL;
 }
 
 char **split_link(char *str)

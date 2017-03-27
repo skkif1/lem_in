@@ -29,9 +29,13 @@ typedef struct	s_room
 typedef struct	s_path
 {
     char *steps;
+    char len;
+
+
     char **ssteps;
     int length;
     t_list *parallel_packadge;
+    char *name;
 }				t_path;
 
 
@@ -42,11 +46,13 @@ char **split_link(char *str);
 void set_weight(t_room *room, int weight);
 t_room *get_end_start(t_list *list, int head);
 void all_path(t_room *room);
-void find_all_path(t_room *room);
+int find_all_path(t_room *room, char *path);
 void link_node(char **info);
 t_path *new_path(char *steps);
 int count_neighbours(t_room *room);
 void del_path(t_room *room, char *neighbour);
 void sort_path(t_list *list);
+void count_steps(t_path *path);
+t_path *get_path_by_name(t_list *list, char *name);
 
 #endif
