@@ -15,6 +15,7 @@
 t_path *new_path(char *str)
 {
     t_path *path;
+    static int name;
     int i;
     int j;
 
@@ -27,9 +28,44 @@ t_path *new_path(char *str)
             j++;
         i++;
     }
-    path->ssteps = ft_strsplit(str, '#');
-    path->ssteps[j - 1] = NULL;
-    path->length = j;
-    path->steps = ft_strdup(str);
+    name++;
     return path;
+}
+
+
+int count_neighbours(t_room *room)
+{
+    t_list *neighbours;
+    int res;
+
+    res = 0;
+    neighbours = room->neighbours;
+
+    while (neighbours)
+    {
+        if (ft_strcmp((char*)neighbours->content, "LLLL") && room->head != 2 && room->head != 1)
+            res++;
+        neighbours = neighbours->next;
+    }
+    return res;
+}
+
+void del_path(t_room *room, char *neighbour)
+{
+
+    t_list *neighbours;
+
+    neighbours = room->neighbours;
+    while (neighbours)
+    {
+        if (!ft_strcmp((char*)neighbours->content, neighbour))
+        {
+            printf("dell -> %s from -> %s\n", (char*)neighbours->content, room->name);
+            neighbours->content = "LLLL";
+            if (room->head != 1)
+                room->visited = 1;
+            return ;
+        }
+        neighbours = neighbours->next;
+    }
 }

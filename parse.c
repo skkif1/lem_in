@@ -42,7 +42,7 @@ void link_node(char **info)
 
     while (info[i])
     {
-        if (ft_strchr(info[i], '-') && !ft_strchr(info[i], '#'))
+        if (ft_strchr(info[i], '-') && !ft_strchr(info[i], '#') && !ft_strchr(info[i], 'L'))
         {
             links = split_link(info[i]);
             link_nodes(links[0], links[1]);
@@ -88,7 +88,7 @@ void read_data(void)
     i = 0;
     line = NULL;
     info = (char **) malloc(sizeof(char *) * 1000);
-    int fd = open("/nfs/2016/o/omotyliu/git/lem-in/test", O_RDONLY);
+    int fd = open("/nfs/2016/o/omotyliu/git/lem-in/cube", O_RDONLY);
     while (get_next_line(fd, &line) > 0)
         info[i++] = line;
     info[i] = NULL;

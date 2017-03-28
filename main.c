@@ -11,10 +11,8 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
-
-char *g_path;
+struct s_sorted_list *g_all_p;
 t_list *g_rooms;
-t_list *g_all_p;
 
 int main(int argc, char **argv)
 {
@@ -23,18 +21,18 @@ int main(int argc, char **argv)
     argc = 0;
     argv = 0;
 
+
     read_data();
 
-    room = get_end_start(g_rooms, 2);
-    set_weight(room, 100);
+    room = get_end_start(2);
 
-    find_all_path(get_end_start(g_rooms, 1));
+        find_all_path(get_end_start(1), ft_strnew(1));
 
-    sort_path(g_all_p);
 
     while (g_all_p)
     {
-        printf("%d", ((t_path *) g_all_p->content)->length);
+        printf("%s  --  %d\n", g_all_p->steps, g_all_p->len);
+
         g_all_p = g_all_p->next;
     }
 }

@@ -29,24 +29,32 @@ typedef struct	s_room
 typedef struct	s_path
 {
     char *steps;
-    char **ssteps;
-    int length;
-    t_list *parallel_packadge;
+    int len;
 }				t_path;
+
+typedef struct	s_sorted_list
+{
+    char *steps;
+    int len;
+    struct s_sorted_list *next;
+
+}				t_sorted_list;
+
 
 
 void read_data(void);
 t_list *get_node_by_name(char *name);
 void link_nodes(char *name1, char *name2);
 char **split_link(char *str);
-void set_weight(t_room *room, int weight);
-t_room *get_end_start(t_list *list, int head);
-void all_path(t_room *room);
-void find_all_path(t_room *room);
+t_room *get_end_start(int head);
+int find_all_path(t_room *room, char *path);
 void link_node(char **info);
 t_path *new_path(char *steps);
 int count_neighbours(t_room *room);
 void del_path(t_room *room, char *neighbour);
-void sort_path(t_list *list);
+
+
+void add(t_sorted_list **list, t_sorted_list *node);
+t_sorted_list *new_node(char *str);
 
 #endif

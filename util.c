@@ -30,12 +30,12 @@ t_list *get_node_by_name(char *name)
     return NULL;
 }
 
-t_room *get_end_start(t_list *list, int head)
+t_room *get_end_start( int head)
 {
     t_list *temp;
     t_room *room;
 
-    temp = list;
+    temp = g_rooms;
 
     while (temp)
     {
@@ -53,6 +53,7 @@ void link_nodes(char *name1, char *name2)
     t_list *node2;
     t_room *room;
     t_room *room2;
+    t_list *neighbours;
 
 
     if ((node = get_node_by_name(name1)) == NULL)
@@ -62,7 +63,13 @@ void link_nodes(char *name1, char *name2)
 
     room = node->content;
     room2 = node2->content;
-
+    neighbours = room->neighbours;
+    while (neighbours)
+    {
+        if (!ft_strcmp(name2, neighbours->content) || !ft_strcmp(name1, neighbours->content))
+            return ;
+        neighbours = neighbours->next;
+    }
     ft_lstadd_end(&room->neighbours, ft_lstnew(name2, sizeof(char) * ft_strlen(name2) + 1));
     ft_lstadd_end(&room2->neighbours, ft_lstnew(name1, sizeof(char) * ft_strlen(name1) + 1));
 

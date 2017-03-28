@@ -12,37 +12,59 @@
 
 #include "lemin.h"
 
-int count_neighbours(t_room *room)
+int g_ants;
+
+t_sorted_list *new_node(char *str)
 {
-    t_list *neighbours;
-    int res;
+    t_sorted_list *node;
+    int i;
+    int j;
 
-    res = 0;
-    neighbours = room->neighbours;
-
-    while (neighbours)
+    i = 0;
+    j = 0;
+    node = (t_sorted_list*)malloc(sizeof(t_sorted_list));
+    while (str[i])
     {
-        if (ft_strcmp((char*)neighbours->content, "LLLL") && room->head != 2 && room->head != 1)
-            res++;
-        neighbours = neighbours->next;
+        if (str[i] == '#')
+            j++;
+     i++;
     }
-    return res;
+    node->len = j;
+    node->steps = str;
+    node->next = NULL;
+    return node;
 }
 
-void del_path(t_room *room, char *neighbour)
+void add(t_sorted_list **alst, t_sorted_list *new)
+{
+    t_sorted_list *lst;
+
+    lst = *alst;
+    if (!lst)
+    {
+        *alst = new;
+        return;
+    }
+    if (lst->len > new->len)
+    {
+        new->next = lst;
+        *alst = new;
+        return;
+    }
+    while (lst->next)
+    {
+        if (lst->next->len > new->len)
+        {
+            new->next = lst->next;
+            lst->next = new;
+            return;
+        }
+        lst = lst->next;
+    }
+    lst->next = new;
+}
+
+int flow_cap(int a, int b)
 {
 
-    t_list *neighbours;
-
-    neighbours = room->neighbours;
-    while (neighbours)
-    {
-        if (!ft_strcmp((char*)neighbours->content, neighbour))
-        {
-            printf("dell -> %s from -> %s\n", (char*)neighbours->content, room->name);
-            neighbours->content = "LLLL";
-            return ;
-        }
-        neighbours = neighbours->next;
-    }
 }
