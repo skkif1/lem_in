@@ -43,7 +43,6 @@ int count_neighbours(t_room *room)
 
     while (neighbours)
     {
-        if (ft_strcmp((char*)neighbours->content, "LLLL") && room->head != 2 && room->head != 1)
             res++;
         neighbours = neighbours->next;
     }

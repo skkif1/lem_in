@@ -12,8 +12,6 @@
 
 #include "lemin.h"
 
-t_sorted_list *g_all_p;
-
 int find_all_path(t_room *room, char *path)
 {
     t_list *neighbours;
@@ -23,7 +21,8 @@ int find_all_path(t_room *room, char *path)
 
     neighbours = room->neighbours;
     path = ft_append(path, "#", ft_strlen(path), 1);
-    path = ft_append(path, ft_strdup(room->name), ft_strlen(path), ft_strlen(room->name));
+    path = ft_append(path, ft_strdup(room->name), ft_strlen(path), ft_strlen(room->name) + 1);
+
 
     if (room->head == 2)
     {
@@ -50,6 +49,6 @@ int find_all_path(t_room *room, char *path)
         neighbours = neighbours->next;
         find_all_path(neighbour, ft_strdup(path));
     }
-    printf("%d\n", count);
+   printf("%d\n", count);
     return 0;
 }

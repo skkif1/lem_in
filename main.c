@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
-struct s_sorted_list *g_all_p;
+t_sorted_list *g_all_p;
 t_list *g_rooms;
+int g_ants;
 
 int main(int argc, char **argv)
 {
@@ -25,14 +26,26 @@ int main(int argc, char **argv)
     read_data();
 
     room = get_end_start(2);
+    find_all_path(get_end_start(1), ft_strnew(1));
+    find_parallel(g_all_p);
+    set_max_path();
+//    ft_split("1#2#2#232", '#');
 
-        find_all_path(get_end_start(1), ft_strnew(1));
-
-
+    t_parall_path *par;
+    g_ants = 10;
+    par = NULL;
     while (g_all_p)
     {
-        printf("%s  --  %d\n", g_all_p->steps, g_all_p->len);
+        par = g_all_p->parallel;
+        printf("path ->%s --- %d ----> %d\n", g_all_p->steps, g_all_p->gen_len, g_all_p->num_of_paral);
 
+        while (par)
+        {
+            printf("parallell ->%s\n",((char*)par->parallel_path));
+            par = par->next;
+        }
+//        printf("--------------------------------\n");
         g_all_p = g_all_p->next;
     }
+    printf("\n%d\n", g_max_path);
 }

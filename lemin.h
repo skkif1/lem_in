@@ -16,6 +16,9 @@
 
 # include "libft/ft_printf.h"
 
+int g_max_path;
+struct s_sorted_list *g_all_p;
+
 typedef struct	s_room
 {
     char *name;
@@ -32,10 +35,22 @@ typedef struct	s_path
     int len;
 }				t_path;
 
+typedef struct	s_parall_path
+{
+    char *parallel_path;
+    struct s_parall_path *next;
+
+}				t_parall_path;
+
+
 typedef struct	s_sorted_list
 {
     char *steps;
+    char **splited_steps;
+    int gen_len;
+    t_parall_path *parallel;
     int len;
+    int num_of_paral;
     struct s_sorted_list *next;
 
 }				t_sorted_list;
@@ -52,9 +67,15 @@ void link_node(char **info);
 t_path *new_path(char *steps);
 int count_neighbours(t_room *room);
 void del_path(t_room *room, char *neighbour);
+void find_parallel(t_sorted_list *lst);
+//char **ft_split(char *str, char separator);
 
+void set_max_path();
 
 void add(t_sorted_list **list, t_sorted_list *node);
 t_sorted_list *new_node(char *str);
+
+void add_parall(t_parall_path **lst, t_parall_path *to_add);
+t_parall_path *new_parall(char *str);
 
 #endif

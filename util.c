@@ -47,6 +47,7 @@ t_room *get_end_start( int head)
     return NULL;
 }
 
+
 void link_nodes(char *name1, char *name2)
 {
     t_list *node;
