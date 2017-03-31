@@ -4,7 +4,7 @@ CC = gcc -Wall -Wextra -Werror
 
 NAME = lem-in
 
-FT_LS_SRC = main.c parse.c util.c find_path.c ant.c graph.c paralel_path.c
+FT_LS_SRC = main.c parse.c util.c find_path.c ant.c graph.c paralel_path.c parallel_list.c calculate.c ant_mover.c
 
 OBJECTS = $(subst .c,.o,$(FT_LS_SRC))
 

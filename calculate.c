@@ -27,23 +27,14 @@ static t_sorted_list *find_better()
 {
     t_sorted_list *temp;
     t_sorted_list *res;
-    int par_nam;
-    int num_of_all;
 
-    par_nam = g_max_path;
-    num_of_all = 0;
     temp  = g_all_p;
-    res = NULL;
+    res = g_all_p;
 
         while (temp)
         {
-            if (temp->num_of_paral == par_nam && temp->gen_len >= num_of_all)
-            {
-                num_of_all = temp->gen_len;
+            if (temp->flow_cap <= res->flow_cap)
                 res = temp;
-                if (temp->next->gen_len > num_of_all)
-                    break;
-            }
             temp = temp->next;
         }
     if (res == NULL)
@@ -51,10 +42,30 @@ static t_sorted_list *find_better()
     return res;
 }
 
-//t_sorted_list *find_max_parallel_path()
-//{
-//    while ()
-//    {
-//
-//    }
-//}
+t_sorted_list *find_max_parallel_path()
+{
+    t_sorted_list *result;
+
+    while ((result = find_better()) == 0)
+        g_max_path--;
+    return result;
+}
+
+int calc_flow_cap(t_sorted_list *path1, t_sorted_list *path2)
+{
+    int steps;
+    int amount;
+    int potential_len;
+
+    potential_len = path1->gen_len + path2->len;
+
+    steps = 0;
+    while (1)
+    {
+        steps++;
+        amount = steps * (path1->num_of_paral + 1) - potential_len + path1->num_of_paral + 1;
+        if (amount >= g_ants)
+            break;
+    }
+    return steps;
+}
