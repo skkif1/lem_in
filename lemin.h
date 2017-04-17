@@ -48,6 +48,7 @@ typedef struct	s_ant
 typedef struct	s_parall_path
 {
     char *parallel_path;
+    int len;
     struct s_parall_path *next;
 
 }				t_parall_path;
@@ -93,7 +94,7 @@ void add(t_sorted_list **list, t_sorted_list *node);
 t_sorted_list *new_node(char *str);
 
 void add_parall(t_parall_path **lst, t_parall_path *to_add);
-t_parall_path *new_parall(char *str);
+t_parall_path *new_parall(char *str, int i);
 t_ant *new_ant(char *name, char **path, char *end);
 
 #endif

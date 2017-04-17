@@ -20,19 +20,20 @@ int main(int argc, char **argv)
     t_sorted_list *max;
     argc = 0;
     argv = 0;
-    g_ants = 10;
+    g_ants = 8;
 
     read_data();
 
     t_ant *ant =new_ant("L1", ft_strsplit("#s#2#3#4#e", '#'), "e");
-
 
     room = get_end_start(2);
     find_all_path(get_end_start(1), ft_strnew(1));
     find_parallel(g_all_p);
     set_max_path();
     max = find_max_parallel_path();
+    add_parall(&max->parallel, new_parall(max->steps, max->len));
     ant_mover(max);
+
 
 //  ft_split("1#2#2#232", '#');
 
@@ -53,10 +54,10 @@ int main(int argc, char **argv)
 //    }
     printf("\n%d\n", max->flow_cap);
     printf("\n%s\n", max->steps);
-//    while (max->parallel)
-//    {
-//        printf("%s\n", max->parallel->parallel_path);
-//        max->parallel = max->parallel->next;
-//    }
+    while (max->parallel)
+    {
+        printf("%s\n", max->parallel->parallel_path);
+        max->parallel = max->parallel->next;
+    }
 
 }

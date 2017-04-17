@@ -88,7 +88,7 @@ void read_data(void)
     i = 0;
     line = NULL;
     info = (char **) malloc(sizeof(char *) * 1000);
-    int fd = open("/nfs/2016/o/omotyliu/git/lem-in/resources/two_nodes", O_RDONLY);
+    int fd = open("/nfs/2016/o/omotyliu/git/lem-in/resources/simple_graph", O_RDONLY);
     while (get_next_line(fd, &line) > 0)
         info[i++] = line;
     info[i] = NULL;

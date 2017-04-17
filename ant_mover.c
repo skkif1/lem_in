@@ -49,7 +49,7 @@ static void del_ant_from_list(char *ant_name)
 
 void move_ant(t_ant *ant)
 {
-    ft_printf("%s-%s\n", ant->name, ant->path[ant->pos]);
+    ft_printf("%s-%s, ", ant->name, ant->path[ant->pos]);
     ant->pos++;
     if (ant->path[ant->pos] == 0)
         del_ant_from_list(ant->name);
@@ -70,34 +70,38 @@ static int move_ants_in_list()
     return 1;
 }
 
-
 void ant_mover(t_sorted_list *package)
 {
-    int i;
-    char *end_name;
-    t_parall_path *parallel;
-    t_ant *ant;
-    i = 0;
-
-    parallel = package->parallel;
-    end_name = get_end_start(2)->name;
-    while (1)
-    {
-        ant = new_ant(ft_strjoin("L", ft_itoa(i)), ft_strsplit(package->steps, '#'), end_name);
-        if (i < g_ants)
-        ft_lstadd(&g_walking_ants, ft_lstnew(ant, sizeof(t_ant)));
-        i++;
-        if (i < g_ants)
-        while (parallel)
-        {
-            ant = new_ant(ft_strjoin("L", ft_itoa(i)), ft_strsplit(parallel->parallel_path, '#'), end_name);
-            ft_lstadd(&g_walking_ants, ft_lstnew(ant, sizeof(t_ant)));
-            i++;
-            if (i < g_ants)
-            parallel = parallel->next;
-        }
-        printf("one step\n");
-        if (!move_ants_in_list())
-            break;
-    }
+       
 }
+//}void ant_mover(t_sorted_list *package)
+//{
+//    int i;
+//    char *end_name;
+//    t_parall_path *parallel;
+//    t_ant *ant;
+//    i = 0;
+//
+//    parallel = package->parallel;
+//    end_name = get_end_start(2)->name;
+//    while (1)
+//    {
+//        ant = new_ant(ft_strjoin("L", ft_itoa(i)), ft_strsplit(package->steps, '#'), end_name);
+//        if (i < g_ants)
+//        ft_lstadd(&g_walking_ants, ft_lstnew(ant, sizeof(t_ant)));
+//        i++;
+//        if (i < g_ants)
+//        while (parallel)
+//        {
+//            ant = new_ant(ft_strjoin("L", ft_itoa(i)), ft_strsplit(parallel->parallel_path, '#'), end_name);
+//            if (i < g_ants)
+//            ft_lstadd(&g_walking_ants, ft_lstnew(ant, sizeof(t_ant)));
+//            i++;
+//            parallel = parallel->next;
+//        }
+//        parallel = package->parallel;
+//        printf("one step\n");
+//        if (!move_ants_in_list())
+//            break;
+//    }
+//}

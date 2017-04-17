@@ -33,7 +33,7 @@ t_sorted_list *new_node(char *str)
     node->splited_steps = NULL;
     node->steps = str;
     node->next = NULL;
-    node->flow_cap = (node->len == 1) ? node->len + g_ants - 1 : node->len + g_ants;
+    node->flow_cap = node->len + g_ants - 1;
     node->gen_len = node->len;
     node->parallel = NULL;
     node->num_of_paral = 1;
@@ -118,7 +118,7 @@ static int if_parallel(t_sorted_list *path1, t_sorted_list *path2)
 
 static void add_parallel(t_sorted_list *path1, t_sorted_list *path2)
 {
-        add_parall(&path1->parallel, new_parall(path2->steps));
+        add_parall(&path1->parallel, new_parall(path2->steps, path2->len));
         path1->gen_len += path2->len;
         path1->num_of_paral++;
         printf("to %s was added --> %s flow cap is - %d\n",path1->steps, path2->steps, path1->flow_cap);
@@ -138,7 +138,7 @@ void find_parallel(t_sorted_list *lst)
         {
 //            printf("%s count %d\n",temp->steps, temp->num_of_paral);
 //            printf("--->>>%d\n", calc_flow_cap(temp, inner));
-            if ((flow = calc_flow_cap(temp, inner)) <= temp->flow_cap)
+            if ((flow = calc_flow_cap(temp, inner)) < temp->flow_cap)
             {
                 temp->flow_cap = flow;
                 if (if_parallel(temp, inner))
@@ -147,7 +147,7 @@ void find_parallel(t_sorted_list *lst)
                 }
 
             }
-            if ((flow = calc_flow_cap(inner, temp)) <= temp->flow_cap)
+            if ((flow = calc_flow_cap(inner, temp)) < inner->flow_cap)
             if (if_parallel(inner, temp))
             {
                 inner->flow_cap = flow;
