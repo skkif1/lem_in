@@ -140,12 +140,11 @@ void find_parallel(t_sorted_list *lst)
 //            printf("--->>>%d\n", calc_flow_cap(temp, inner));
             if ((flow = calc_flow_cap(temp, inner)) < temp->flow_cap)
             {
-                temp->flow_cap = flow;
                 if (if_parallel(temp, inner))
                 {
                     add_parallel(temp, inner);
+                    temp->flow_cap = flow;
                 }
-
             }
             if ((flow = calc_flow_cap(inner, temp)) < inner->flow_cap)
             if (if_parallel(inner, temp))

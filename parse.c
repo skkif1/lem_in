@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
 #include "lemin.h"
 
 t_list *g_rooms;
@@ -55,8 +54,8 @@ void link_node(char **info)
 static void parse_room(char **info)
 {
     int i;
-
     t_room *room;
+
     i = 1;
     while(info[i] != NULL)
     {
@@ -88,10 +87,11 @@ void read_data(void)
     i = 0;
     line = NULL;
     info = (char **) malloc(sizeof(char *) * 1000);
-    int fd = open("/nfs/2016/o/omotyliu/git/lem-in/resources/simple_graph", O_RDONLY);
+    int fd = open("/nfs/2016/o/omotyliu/git/lem-in/resources/middle", O_RDONLY);
     while (get_next_line(fd, &line) > 0)
         info[i++] = line;
     info[i] = NULL;
+    check_number(info[0]);
     parse_room(info);
     link_node(info);
 }
