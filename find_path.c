@@ -14,30 +14,20 @@
 
 int find_all_path(t_room *room, char *path)
 {
-    t_list *neighbours;
-    t_room *neighbour;
-    static int count = 0;
-    int i;
+    t_list *neighbours = NULL;
+    t_room *neighbour = NULL;
 
     neighbours = room->neighbours;
     path = ft_append(path, "#", ft_strlen(path), 1);
-    path = ft_append(path, ft_strdup(room->name), ft_strlen(path), ft_strlen(room->name) + 1);
+    path = ft_append(path, room->name, ft_strlen(path), ft_strlen(room->name) + 1);
 
 
     if (room->head == 2)
     {
         add(&g_all_p, new_node(path));
-//        printf("%s\n", path);
-        count++;
         return  1;
     }
-//    t_list *lst = neighbours;
-//    while (lst)
-//    {
-//        printf("%s\n", ((t_room*)get_node_by_name(lst->content)->content)->name);
-//        lst = lst->next;
-//    }
-//    printf("______%s______\n", room->name);
+
     while (neighbours)
     {
         neighbour = get_node_by_name(neighbours->content)->content;
@@ -49,6 +39,6 @@ int find_all_path(t_room *room, char *path)
         neighbours = neighbours->next;
         find_all_path(neighbour, ft_strdup(path));
     }
-   printf("%d\n", count);
+    free(path);
     return 0;
 }

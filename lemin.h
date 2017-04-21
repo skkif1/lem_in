@@ -25,6 +25,7 @@ typedef struct	s_room
     char *name;
     t_list *neighbours;
     int head;
+    char *coord;
     int weight;
     int visited;
 
@@ -41,7 +42,6 @@ typedef struct	s_ant
     char *name;
     char **path;
     int pos;
-    char *room_name;
     char *end;
 }				t_ant;
 
@@ -70,8 +70,9 @@ typedef struct	s_sorted_list
 
 
 
-void read_data(void);
+char **read_data(void);
 t_list *get_node_by_name(char *name);
+int if_fool();
 void link_nodes(char *name1, char *name2);
 char **split_link(char *str);
 t_room *get_end_start(int head);
@@ -100,5 +101,9 @@ t_ant *new_ant(char *name, char **path, char *end);
 
 //error_handler
 void check_number(char *str);
+void check_room(char *str);
+void error();
+void check_info(char **str);
+void check_coord(t_room *room);
 
 #endif

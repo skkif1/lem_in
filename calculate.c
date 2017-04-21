@@ -46,8 +46,9 @@ t_sorted_list *find_max_parallel_path()
 {
     t_sorted_list *result;
 
-    while ((result = find_better()) == 0)
-        g_max_path--;
+   if ((result = find_better()) == 0)
+       error();
+    g_max_path--;
     return result;
 }
 

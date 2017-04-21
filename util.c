@@ -13,6 +13,7 @@
 #include "lemin.h"
 
 t_list *g_rooms;
+int g_ants;
 
 t_list *get_node_by_name(char *name)
 {
@@ -28,6 +29,33 @@ t_list *get_node_by_name(char *name)
         temp = temp->next;
     }
     return NULL;
+}
+
+int if_fool()
+{
+    t_list *start;
+    char *end_name;
+    int i;
+
+    start = get_end_start(1)->neighbours;
+    end_name = get_end_start(2)->name;
+
+    i = 1;
+    while (start)
+    {
+        if (!ft_strcmp((char*)start->content, end_name))
+        {
+            while (i <= g_ants)
+            {
+                ft_printf("L%d-e ", i);
+                i++;
+            }
+            ft_printf(" ");
+            exit(0);
+        }
+        start = start->next;
+    }
+    return (0);
 }
 
 t_room *get_end_start( int head)
@@ -57,23 +85,20 @@ void link_nodes(char *name1, char *name2)
     t_list *neighbours;
 
 
-    if ((node = get_node_by_name(name1)) == NULL)
-        printf("errrrrrr");
-    if ((node2 = get_node_by_name(name2)) == NULL)
-        printf("errrrrrr");
-
+    node2 = NULL;
+    if ((node = get_node_by_name(name1)) == NULL || (node2 = get_node_by_name(name2)) == NULL)
+        error();
     room = node->content;
     room2 = node2->content;
     neighbours = room->neighbours;
     while (neighbours)
     {
-        if (!ft_strcmp(name2, neighbours->content) || !ft_strcmp(name1, neighbours->content))
+        if (!ft_strcmp(name2, neighbours->content))
             return ;
         neighbours = neighbours->next;
     }
     ft_lstadd_end(&room->neighbours, ft_lstnew(name2, sizeof(char) * ft_strlen(name2) + 1));
     ft_lstadd_end(&room2->neighbours, ft_lstnew(name1, sizeof(char) * ft_strlen(name1) + 1));
-
 }
 
 char **split_link(char *str)
@@ -89,4 +114,10 @@ char **split_link(char *str)
     res[1] = ft_strdup(ft_strchr(str, '-') + 1);
     res[2] = NULL;
     return res;
+}
+
+void error()
+{
+    ft_printf("ERROR\n");
+    exit(1);
 }

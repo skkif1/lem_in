@@ -18,26 +18,36 @@ int main(int argc, char **argv)
 {
     t_room *room;
     t_sorted_list *max;
+    char **info;
     argc = 0;
     argv = 0;
-    g_ants = 9;
+    int i;
 
-    read_data();
+    info = read_data();
+
+
     room = get_end_start(2);
-    find_all_path(get_end_start(1), ft_strnew(1));
-    find_parallel(g_all_p);
-    set_max_path();
-    max = find_max_parallel_path();
-    add_parall(&max->parallel, new_parall(max->steps, max->len));
-    ant_mover(max);
-    
-    printf("\n%d\n", max->flow_cap);
-    printf("\n%s\n", max->steps);
-    while (max->parallel)
-    {
-        printf("%s\n", max->parallel->parallel_path);
-        printf("%d\n", max->parallel->ants_num);
-        max->parallel = max->parallel->next;
-    }
 
+    find_all_path(get_end_start(1), ft_strnew(1));
+
+    find_parallel(g_all_p);
+
+    set_max_path();
+
+    max = find_max_parallel_path();
+
+    i = 0;
+    while (info[i] != NULL)
+    {
+        ft_printf("%s\n", info[i]);
+        free(info[i]);
+        i++;
+    }
+    free(info);
+    printf("\n");
+
+    add_parall(&max->parallel, new_parall(max->steps, max->len));
+
+    ant_mover(max);
+    sleep(5);
 }
