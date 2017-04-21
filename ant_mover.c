@@ -26,6 +26,18 @@ t_ant *new_ant(char *name, char **path, char *end)
     return ant;
 }
 
+static void clear_two_dem(char **mass)
+{
+    int i = 0;
+
+    while (mass[i])
+    {
+        free(mass[i]);
+        i++;
+    }
+    free(mass);
+}
+
 static void del_ant_from_list(char *ant_name)
 {
     t_list *temp;
@@ -34,6 +46,9 @@ static void del_ant_from_list(char *ant_name)
     if (!ft_strcmp(((t_ant*)temp->content)->name, ant_name))
     {
         g_walking_ants = temp->next;
+        free(((t_ant*)temp->content)->name);
+        clear_two_dem(((t_ant*)temp->content)->path);
+        free(temp->content);
         free(temp);
     }
     while (temp)
@@ -41,14 +56,23 @@ static void del_ant_from_list(char *ant_name)
         if (temp->next)
         {
             if (!ft_strcmp(((t_ant*)temp->next->content)->name, ant_name))
+            {
+                free(((t_ant*)temp->next->content)->name);
+                clear_two_dem(((t_ant*)temp->next->content)->path);
+                free(temp->next->content);
+                free(temp->next);
                 temp->next = temp->next->next;
+            }
         }
         temp = temp->next;
     }
 }
 
+
 void move_ant(t_ant *ant)
 {
+    if (ant == NULL)
+        return;
     ft_printf("%s-%s, ", ant->name, ant->path[ant->pos]);
     ant->pos++;
     if (ant->path[ant->pos] == 0)
@@ -69,12 +93,13 @@ static int move_ants_in_list()
     }
     return 1;
 }
+
 void set_ant_per_path(t_sorted_list *package)
 {
     t_parall_path *parallel;
-
+    if (if_fool())
+        return;
     parallel = package->parallel;
-
     while (parallel)
     {
         parallel->ants_num = package->flow_cap - (parallel->len - 1);
@@ -82,16 +107,19 @@ void set_ant_per_path(t_sorted_list *package)
     }
 }
 
+
+
 void ant_mover(t_sorted_list *package)
 {
     t_parall_path *parall_pack;
-    set_ant_per_path(package);
     t_ant *ant;
     char *end_name;
-    end_name = get_end_start(2)->name;
     int i;
+    char *temp;
 
     i = 1;
+    set_ant_per_path(package);
+    end_name = get_end_start(2)->name;
     parall_pack = package->parallel;
     while (g_ants > 0)
     {
@@ -99,8 +127,11 @@ void ant_mover(t_sorted_list *package)
         {
             if (parall_pack->ants_num > 0)
             {
-                ant = new_ant(ft_strjoin("L", ft_itoa(i)), ft_strsplit(parall_pack->parallel_path, '#'), end_name);
+                temp = ft_itoa(i);
+                ant = new_ant(ft_strjoin("L", temp), ft_strsplit(parall_pack->parallel_path, '#'), end_name);
                 ft_lstadd_end(&g_walking_ants, ft_lstnew(ant, sizeof(t_ant)));
+                free(ant);
+                free(temp);
                 parall_pack->ants_num--;
                 g_ants--;
                 i++;
