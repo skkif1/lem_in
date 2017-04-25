@@ -11,43 +11,33 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
+
 t_sorted_list *g_all_p;
 t_list *g_rooms;
 
-int main(int argc, char **argv)
+int	main(void)
 {
-    t_room *room;
-    t_sorted_list *max;
-    char **info;
-    argc = 0;
-    argv = 0;
-    int i;
+	t_sorted_list	*max;
+	char			**info;
+	int				i;
 
-    info = read_data();
-
-
-    room = get_end_start(2);
-
-    find_all_path(get_end_start(1), ft_strnew(1));
-
-    find_parallel(g_all_p);
-
-    set_max_path();
-
-    max = find_max_parallel_path();
-
-    i = 0;
-    while (info[i] != NULL)
-    {
-        ft_printf("%s\n", info[i]);
-        free(info[i]);
-        i++;
-    }
-    free(info);
-    printf("\n");
-
-    add_parall(&max->parallel, new_parall(max->steps, max->len));
-
-    ant_mover(max);
-    sleep(5);
+	i = 0;
+	info = read_data();
+	find_all_path(get_end_start(1), ft_strnew(1));
+	find_parallel(g_all_p, 0);
+	set_max_path();
+	max = find_max_parallel_path();
+	while (info[i] != NULL)
+	{
+		ft_printf("%s\n", info[i]);
+		free(info[i]);
+		i++;
+	}
+	free(info);
+	ft_printf("\n");
+	add_parall(&max->parallel, new_parall(max->steps, max->len));
+	set_ant_per_path(max);
+	ant_mover(max, 1, NULL, get_end_start(2)->name);
+	while (move_ants_in_list())
+		;
 }
