@@ -15,109 +15,62 @@
 t_list *g_rooms;
 int g_ants;
 
-t_list *get_node_by_name(char *name)
+void	clear_two_dem(char **mass)
 {
-    t_list *temp;
-    t_room *room;
+	int i;
 
-    temp = g_rooms;
-    while (temp)
-    {
-        room = temp->content;
-        if (!ft_strcmp(room->name, name))
-            return (temp);
-        temp = temp->next;
-    }
-    return NULL;
+	i = 0;
+	while (mass[i])
+	{
+		free(mass[i]);
+		i++;
+	}
+	free(mass);
 }
 
-int if_fool()
+int		if_fool(void)
 {
-    t_list *start;
-    char *end_name;
-    int i;
+	t_list	*start;
+	char	*end_name;
+	int		i;
 
-    start = get_end_start(1)->neighbours;
-    end_name = get_end_start(2)->name;
-
-    i = 1;
-    while (start)
-    {
-        if (!ft_strcmp((char*)start->content, end_name))
-        {
-            while (i <= g_ants)
-            {
-                ft_printf("L%d-e ", i);
-                i++;
-            }
-            ft_printf(" ");
-            exit(0);
-        }
-        start = start->next;
-    }
-    return (0);
+	start = get_end_start(1)->neighbours;
+	end_name = get_end_start(2)->name;
+	i = 1;
+	while (start)
+	{
+		if (!ft_strcmp((char*)start->content, end_name))
+		{
+			while (i <= g_ants)
+			{
+				ft_printf("L%d-e ", i);
+				i++;
+			}
+			ft_printf("\n");
+			exit(0);
+		}
+		start = start->next;
+	}
+	return (0);
 }
 
-t_room *get_end_start( int head)
+char	**split_link(char *str)
 {
-    t_list *temp;
-    t_room *room;
+	int		i;
+	char	**res;
 
-    temp = g_rooms;
-
-    while (temp)
-    {
-        room = temp->content;
-        if (room->head == head)
-            return room;
-        temp = temp->next;
-    }
-    return NULL;
+	res = (char**)malloc(sizeof(char*) * 3);
+	i = 0;
+	while (str[i] != '-')
+		i++;
+	res[0] = ft_strsub(str, 0, i);
+	res[1] = ft_strdup(ft_strchr(str, '-') + 1);
+	res[2] = NULL;
+	return (res);
 }
 
-
-void link_nodes(char *name1, char *name2)
+void	error(void)
 {
-    t_list *node;
-    t_list *node2;
-    t_room *room;
-    t_room *room2;
-    t_list *neighbours;
-
-
-    node2 = NULL;
-    if ((node = get_node_by_name(name1)) == NULL || (node2 = get_node_by_name(name2)) == NULL)
-        error();
-    room = node->content;
-    room2 = node2->content;
-    neighbours = room->neighbours;
-    while (neighbours)
-    {
-        if (!ft_strcmp(name2, neighbours->content))
-            return ;
-        neighbours = neighbours->next;
-    }
-    ft_lstadd_end(&room->neighbours, ft_lstnew(name2, sizeof(char) * ft_strlen(name2) + 1));
-    ft_lstadd_end(&room2->neighbours, ft_lstnew(name1, sizeof(char) * ft_strlen(name1) + 1));
-}
-
-char **split_link(char *str)
-{
-    int i;
-    char **res;
-
-    res = (char**)malloc(sizeof(char*) * 3);
-    i = 0;
-    while (str[i] != '-')
-        i++;
-    res[0] = ft_strsub(str, 0, i);
-    res[1] = ft_strdup(ft_strchr(str, '-') + 1);
-    res[2] = NULL;
-    return res;
-}
-
-void error()
-{
-    ft_printf("ERROR\n");
-    exit(1);
+	ft_printf("ERROR\n");
+	exit(1);
 }

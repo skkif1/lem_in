@@ -12,59 +12,29 @@
 
 #include "lemin.h"
 
-t_path *new_path(char *str)
+t_ant	*new_ant(char *name, char **path, char *end)
 {
-    t_path *path;
-    static int name;
-    int i;
-    int j;
+	t_ant *ant;
 
-    i = 0;
-    j = 0;
-    path = (t_path*)malloc(sizeof(t_path));
-    while (str[i])
-    {
-        if (str[i] == '#')
-            j++;
-        i++;
-    }
-    name++;
-    return path;
+	ant = (t_ant*)malloc(sizeof(t_ant));
+	ant->path = path;
+	ant->pos = 1;
+	ant->name = name;
+	ant->end = end;
+	return (ant);
 }
 
-
-int count_neighbours(t_room *room)
+int		count_neighbours(t_room *room)
 {
-    t_list *neighbours;
-    int res;
+	t_list	*neighbours;
+	int		res;
 
-    res = 0;
-    neighbours = room->neighbours;
-
-    while (neighbours)
-    {
-            res++;
-        neighbours = neighbours->next;
-    }
-    return res;
-}
-
-void del_path(t_room *room, char *neighbour)
-{
-
-    t_list *neighbours;
-
-    neighbours = room->neighbours;
-    while (neighbours)
-    {
-        if (!ft_strcmp((char*)neighbours->content, neighbour))
-        {
-            printf("dell -> %s from -> %s\n", (char*)neighbours->content, room->name);
-            neighbours->content = "LLLL";
-            if (room->head != 1)
-                room->visited = 1;
-            return ;
-        }
-        neighbours = neighbours->next;
-    }
+	res = 0;
+	neighbours = room->neighbours;
+	while (neighbours)
+	{
+		res++;
+		neighbours = neighbours->next;
+	}
+	return (res);
 }
